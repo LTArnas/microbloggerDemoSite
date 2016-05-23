@@ -1,0 +1,15 @@
+﻿@model microbloggerDemoSite.Blog.Models.Post
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken();
+    
+    @Html.EditorForModel();
+
+    <button type="submit">Submit</button>
+}

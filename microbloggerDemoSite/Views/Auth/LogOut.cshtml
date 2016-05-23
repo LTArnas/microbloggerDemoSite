@@ -1,0 +1,14 @@
+﻿
+<ul>
+    @{ foreach (string key in Request.QueryString.AllKeys)
+        {
+            <li>@key - @Request.QueryString[key]</li>
+        }}
+</ul>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="returnUrl" value=@ViewBag.returnRul />
+    <button type="submit">Log Out</button>
+}

@@ -1,0 +1,23 @@
+﻿@model microbloggerDemoSite.Identity.IdentityUser
+@{
+    ViewBag.Title += "Register";
+}
+
+<h1>Registration! <small>...clearly, you are an awesome person.</small></h1>
+
+<ul>
+    @{ foreach (string key in Request.QueryString.AllKeys)
+        {
+            <li>@key - @Request.QueryString[key]</li>
+        }}
+</ul>
+
+@Html.ValidationSummary(false)
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.EditorForModel()
+
+    <button type="submit">Register</button>
+}

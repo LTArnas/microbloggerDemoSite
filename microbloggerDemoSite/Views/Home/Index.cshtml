@@ -1,0 +1,74 @@
+﻿@model List<microbloggerDemoSite.Identity.IdentityUser>
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="panel-group" id="usersAccordion" role="tablist" aria-multiselectable="true">
+            <section class="panel panel-default">
+                @{
+                    foreach (var indexedUser in Model.Select((user, index) => new { index, user }))
+                    {
+                        // Some special markup for first user
+                        
+                        if (indexedUser.index == 0)
+                        {
+                            <div class="panel-heading" role="tab" id="@indexedUser.user.Id+Heading">
+                                <h4 class="panel-title">
+                                    <a role="button" 
+                                        data-toggle="collapse" 
+                                        data-parent="#usersAccordion" 
+                                        href="#@indexedUser.user.Id" 
+                                        aria-expanded="true" 
+                                        aria-controls="@indexedUser.user.Id">@indexedUser.user.Nick</a>
+                                </h4>
+                            </div>
+                            <div id="@indexedUser.user.Id" 
+                                    class="panel-collapse collapse in" 
+                                    role="tabpanel" 
+                                    aria-labelledby="@indexedUser.user.Id+Heading">
+                                <ul class="list-group">
+                                    @{
+                                        foreach (microbloggerDemoSite.Blog.Models.Post post in indexedUser.user.RecentPosts)
+                                        {
+                                            <li class="list-group-item">
+                                                <p class="blog-post">@post.Content</p>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="panel-heading" role="tab" id="@indexedUser.user.Id+Heading">
+                                <h4 class="panel-title">
+                                    <a class="collapsed" 
+                                       role="button" 
+                                       data-toggle="collapse" 
+                                       data-parent="#usersAccordion" 
+                                       href="#@indexedUser.user.Id" 
+                                       aria-expanded="false" 
+                                       aria-controls="@indexedUser.user.Id">@indexedUser.user.Nick</a>
+                                </h4>
+                            </div>
+                            <div id="@indexedUser.user.Id" 
+                                 class="panel-collapse collapse" 
+                                 role="tabpanel" 
+                                 aria-labelledby="@indexedUser.user.Id+Heading">
+                                <ul class="list-group">
+                                    @{
+                                        foreach (microbloggerDemoSite.Blog.Models.Post post in indexedUser.user.RecentPosts)
+                                        {
+                                            <li class="list-group-item">
+                                                <p class="blog-post">@post.Content</p>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        } 
+                    }
+                }
+            </section>
+        </div>
+    </div>
+</div>

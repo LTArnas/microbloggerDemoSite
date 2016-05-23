@@ -1,0 +1,51 @@
+﻿@model microbloggerDemoSite.Blog.Models.Bucket
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+
+<p>
+    @Html.ActionLink("Create New Post", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.AuthorId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BucketNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PostsCount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Full)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.Posts) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PublishDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Content)
+        </td>
+        <td>
+            @Html.ActionLink("View", "Get", new { userId = Model.AuthorId, postId=item.Id })
+        </td>
+    </tr>
+}
+    <tr>
+        <td>
+            @Html.ActionLink("Previous page", "List", new { page = Model.BucketNumber - 1 })
+            @Html.ActionLink("Next page", "List", new { page = Model.BucketNumber + 1})
+        </td>
+    </tr>
+</table>

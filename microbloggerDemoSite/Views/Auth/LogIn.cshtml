@@ -1,0 +1,23 @@
+﻿@model microbloggerDemoSite.Models.LogInModel
+@{
+    ViewBag.Title += "LogIn";
+}
+
+<h1>Login. <small>Welcome back!</small></h1>
+
+<ul>
+@{ foreach (string key in Request.QueryString.AllKeys)
+    {
+        <li>@key - @Request.QueryString[key]</li>
+    }}
+</ul>
+
+@Html.ValidationSummary(false)
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.EditorForModel()
+
+    <button type="submit">Log In</button>
+}

@@ -7,6 +7,8 @@ using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
 using System.Web.Http;
+using System.Web.Helpers;
+using System.Security.Claims;
 
 namespace microbloggerDemoSite
 {
@@ -17,7 +19,12 @@ namespace microbloggerDemoSite
             // Code that runs on application startup
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);            
+            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);          
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+            // TODO: See if we can get rid of this setting on production,
+            // (Azure might provide us with the second claim we'd need... try it.)
+            AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.NameIdentifier;
         }
     }
 }

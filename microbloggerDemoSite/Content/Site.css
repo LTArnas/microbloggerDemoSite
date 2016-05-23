@@ -1,0 +1,26 @@
+﻿body {
+    padding-top: 60px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select {
+    max-width: 280px;
+}
+
+/* Make sure user's posts show line breaks. */
+.blog-post {
+    max-width: 100%;
+    white-space:pre-wrap;
+}
+
+/* textarea element is used for creating posts. */
+.blog-post textarea {
+}
