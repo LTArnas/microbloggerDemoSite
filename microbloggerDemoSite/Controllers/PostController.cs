@@ -21,17 +21,22 @@ namespace microbloggerDemoSite.Controllers
             return RedirectLocal(Url.Action("Get"));
         }
 
+        [AllowAnonymous]
         public ActionResult Get(string userId, string postId)
         {
-            Post result;
-
             if (string.IsNullOrWhiteSpace(userId))
                 userId = User.Identity.GetUserId();
 
-            result = BlogManager.FindPostById(userId, postId);
+            Post result = BlogManager.FindPostById(userId, postId);
+            IdentityUser author = UserManager.FindById(userId);
+
+            GetPostViewModel viewModel = new GetPostViewModel
+            {
+                Post = result,
+                Author = author
+            };
             
-            // Null reference is handled by the view, as 'not found'.
-            return View(result);
+            return View(viewModel);
         }
 
         public ActionResult Create(Post model)
@@ -57,16 +62,28 @@ namespace microbloggerDemoSite.Controllers
             }
         }
 
+        [AllowAnonymous]
         public ActionResult List(string userId, int page = 1)
         {
-            Bucket result;
-
             if (string.IsNullOrWhiteSpace(userId))
                 userId = User.Identity.GetUserId();
-            
-            result = BlogManager.FindBucketByNumber(userId, page);
 
-            return View(result);
+            IdentityUser author = UserManager.FindById(userId);
+
+            if (page < 1)
+                page = 1;
+            if (page > author.BucketCount)
+                page = author.BucketCount;
+            
+            Bucket result = BlogManager.FindBucketByNumber(userId, page);
+
+            ListPostsViewModel viewModel = new ListPostsViewModel
+            {
+                Author = author,
+                Bucket = result
+            };
+
+            return View(viewModel);
         }
     }
 }

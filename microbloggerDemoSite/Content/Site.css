@@ -15,12 +15,16 @@ select {
     max-width: 280px;
 }
 
+textarea {
+    max-width: 100%;
+    width: 100%;
+    min-height: 200px;
+}
+
 /* Make sure user's posts show line breaks. */
 .blog-post {
     max-width: 100%;
-    white-space:pre-wrap;
-}
-
-/* textarea element is used for creating posts. */
-.blog-post textarea {
+    white-space: pre-wrap;
+    -ms-word-wrap: break-word;
+    word-wrap: break-word;
 }

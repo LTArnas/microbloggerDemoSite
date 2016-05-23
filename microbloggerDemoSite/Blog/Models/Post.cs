@@ -25,11 +25,13 @@ namespace microbloggerDemoSite.Blog.Models
         public string Id { get; set; }
         
         [DataType(DataType.DateTime)]
+        [Display(Name = "Publish Date", Description ="Publish date", ShortName = "Date")]
         [BsonRequired]
         public DateTime PublishDate { get; set; }
 
         [DataType(DataType.MultilineText)]
-        [StringLength(maximumLength : 500, MinimumLength = 1)]
+        [StringLength(maximumLength : 500, MinimumLength = 1, ErrorMessage = "Content length must be between 1 and 500 characters.")]
+        [Display(Name = "Content", Description = "The content of the post.", ShortName = "Content")]
         [Required]
         [BsonRequired]
         public string Content { get; set; }

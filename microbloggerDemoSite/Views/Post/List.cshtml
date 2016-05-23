@@ -1,51 +1,78 @@
-﻿@model microbloggerDemoSite.Blog.Models.Bucket
+﻿@model microbloggerDemoSite.Models.Post.ListPostsViewModel
 
 @{
     ViewBag.Title = "List";
 }
 
-<h2>List</h2>
+<div class="row">
+    <div class="col-xs-12">
+        <h2>All the posts! <small>This person... Em I right?</small></h2>
+    </div>
+</div>
 
-<p>
-    @Html.ActionLink("Create New Post", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.AuthorId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BucketNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PostsCount)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Full)
-        </th>
-        <th></th>
-    </tr>
+<div class="row">
+    <div class="col-xs-12">
+        <a class="btn btn-info"
+           href="@Url.Action("Read", "User", new { userId = Model.Author.Id })">
+            <span class="glyphicon glyphicon-user"></span>
+            @Model.Author.Nick
+        </a>
+    </div>
+</div>
 
-@foreach (var item in Model.Posts) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PublishDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Content)
-        </td>
-        <td>
-            @Html.ActionLink("View", "Get", new { userId = Model.AuthorId, postId=item.Id })
-        </td>
-    </tr>
-}
-    <tr>
-        <td>
-            @Html.ActionLink("Previous page", "List", new { page = Model.BucketNumber - 1 })
-            @Html.ActionLink("Next page", "List", new { page = Model.BucketNumber + 1})
-        </td>
-    </tr>
-</table>
+<br />
+
+<div class="row">
+    <div class="col-xs-12">
+        <ul class="list-group">
+        @foreach (var item in Model.Bucket.Posts)
+        {
+            <li class="list-group-item">
+                <div class="pull-right">
+                    <div class="col-md-6">
+                    <h4>
+                        <a class="label label-default"
+                           href="@Url.Action("Get", "Post", new { userId = Model.Bucket.AuthorId, postId = item.Id })">
+                            <span class="glyphicon glyphicon-link"></span>
+                            @item.Id
+                        </a>
+                    </h4>
+                    </div>
+                    <div class="col-md-6">
+                        <h4>
+                            <span class="glyphicon glyphicon-calendar"></span>
+                            @item.PublishDate
+                        </h4>
+                    </div>
+                </div>
+                <blockquote>
+                    <p class="blog-post">@item.Content</p>
+                </blockquote>
+                
+            </li>
+        }
+        </ul>
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <nav>
+            <ul class="pagination">
+                <li>
+                    <a href="@Url.Action("List", new { page = Model.Bucket.BucketNumber - 1})"
+                       aria-label="Previous">
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("List", new { page = Model.Bucket.BucketNumber + 1})"
+                       aria-label="Next">
+                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>

@@ -1,30 +1,50 @@
-﻿@model microbloggerDemoSite.Blog.Models.Post
+﻿@model microbloggerDemoSite.Models.Post.GetPostViewModel
 
 @{
     ViewBag.Title = "Get";
 }
 
-<h2>Get</h2>
+<div class="row">
+    <div class="col-xs-12">
+        <h2>A wild post appears! <small>We agree, gotta catch 'em all!</small></h2>
+    </div>
+</div>
 
-<div>
-    <h4>Post</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.PublishDate)
-        </dt>
+<div class="row">
+    <div class="col-md-5">
+        <h3>
+            <a class="label label-primary"
+               href="@Url.Action("Read", "User", new { userId = Model.Author.Id })">
+                <span class="glyphicon glyphicon-user"></span>
+                @Model.Author.Nick
+            </a>
+        </h3>
+    </div>
+    <div class="col-md-3">
+        <h3>
+            <span class="glyphicon glyphicon-calendar"></span>
+            @Html.DisplayFor(m => m.Post.PublishDate)
+        </h3>
+    </div>
+    <div class="col-md-4">
+        <div class="pull-right">
+            <h3>
+                <a class="label label-default"
+                   href="@Request.Url.AbsoluteUri">
+                    <span class="glyphicon glyphicon-link"></span>
+                    @Model.Post.Id
+                </a>
+            </h3>
+        </div>
+    </div>
+</div>
 
-        <dd>
-            @Html.DisplayFor(model => model.PublishDate)
-        </dd>
+<br />
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Content)
-        </dt>
-
-        <dd>
-            <p class="blog-post">@Model.Content</p>
-        </dd>
-
-    </dl>
+<div class="row">
+    <div class="col-xs-12">
+        <blockquote>
+            <p class="blog-post">@Html.DisplayFor(m => m.Post.Content)</p>
+        </blockquote>
+    </div>
 </div>

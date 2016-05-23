@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
-namespace microbloggerDemoSite.Models
+namespace microbloggerDemoSite.Models.Auth
 {
     public class LogInModel
     {

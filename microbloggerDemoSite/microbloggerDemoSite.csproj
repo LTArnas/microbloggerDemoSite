@@ -187,12 +187,11 @@
     </Compile>
     <Compile Include="Identity\ApplicationClaim.cs" />
     <Compile Include="Identity\IdentityUser.cs" />
-    <Compile Include="Models\LogInModel.cs" />
+    <Compile Include="Models\Auth\LogInModel.cs" />
     <Compile Include="DAL\MongoDbContext.cs" />
-    <Compile Include="Models\Post\Create.cs" />
-    <Compile Include="Models\Post\CreateInput.cs" />
-    <Compile Include="Models\Post\CreateViewModel.cs" />
-    <Compile Include="Models\RegisterModel.cs" />
+    <Compile Include="Models\Post\GetPostViewModel.cs" />
+    <Compile Include="Models\Post\ListPostsViewModel.cs" />
+    <Compile Include="Models\Auth\RegisterModel.cs" />
     <Compile Include="Identity\UserStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -210,10 +209,8 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Post\Create.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\Post\test.cshtml" />
     <Content Include="Views\Post\Get.cshtml" />
     <Content Include="Views\Post\List.cshtml" />
-    <Content Include="Views\Home\UserHeader.cshtml" />
     <Content Include="Views\User\Read.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
