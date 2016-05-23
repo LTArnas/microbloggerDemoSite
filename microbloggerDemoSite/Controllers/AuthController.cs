@@ -10,7 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using microbloggerDemoSite.Identity;
-using microbloggerDemoSite.Models;
+using microbloggerDemoSite.Models.Auth;
 
 namespace microbloggerDemoSite.Controllers
 {
