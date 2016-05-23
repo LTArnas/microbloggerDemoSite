@@ -1,14 +1,16 @@
-﻿
-<ul>
-    @{ foreach (string key in Request.QueryString.AllKeys)
-        {
-            <li>@key - @Request.QueryString[key]</li>
-        }}
-</ul>
+﻿<div class="row">
+    <div class="col-xs-12">
+        <h1>Logout. <small>"Is that your final answer?"</small></h1>
+    </div>
+</div>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    <input type="hidden" name="returnUrl" value=@ViewBag.returnRul />
-    <button type="submit">Log Out</button>
-}
+<div class="row">
+    <div class="col-xs-12">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="returnUrl" value=@ViewBag.returnRul />
+            <button class="btn btn-danger btn-lg" type="submit">Yes! I enjoy the login page.</button>
+        }
+        </div>
+</div>

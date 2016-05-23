@@ -30,12 +30,12 @@ namespace microbloggerDemoSite.Controllers
         
         public ActionResult Register()
         {
-            return View(new IdentityUser());
+            return View(new RegisterModel());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(IdentityUser model)
+        public ActionResult Register(RegisterModel model)
         {
             // Check model
             if (!ModelState.IsValid)
@@ -44,11 +44,17 @@ namespace microbloggerDemoSite.Controllers
                 return View(model);
             }
 
+            if (model.Password != model.PasswordRepeat)
+            {
+                ModelState.AddModelError("Password", "Password fields did not match.");
+                return View(model);
+            }
+
             // Check if user already exists.
             IdentityUser existingUser = UserManager.FindByName(model.UserName);
             if (existingUser != null)
             {
-                ModelState.AddModelError("", "User already exists.");
+                ModelState.AddModelError("Username", "User already exists.");
                 return View(model);
             }
 
@@ -67,10 +73,13 @@ namespace microbloggerDemoSite.Controllers
             IdentityResult createResult = UserManager.Create(user, model.Password);
             if (!createResult.Succeeded)
             {
+                /*
                 foreach (string error in createResult.Errors)
                 {
                     ModelState.AddModelError("", error);
                 }
+                */
+                ModelState.AddModelError("", "Sorry, failed to create account. Try again.");
                 return View(model);
             }
 
@@ -79,7 +88,7 @@ namespace microbloggerDemoSite.Controllers
             ClaimsIdentity identity = UserManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
 
             if (identity == null)
-                throw new NullReferenceException();
+                return RedirectLocal(Url.Action("LogIn"));
 
             AuthenticationManager.SignIn(identity);
 
@@ -127,29 +136,11 @@ namespace microbloggerDemoSite.Controllers
             ClaimsIdentity identity = UserManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
 
             if (identity == null)
-                throw new NullReferenceException();
-
-            // TODO: Setup proper claims as part of the user (implement the necessary interfaces, etc)
-            /*
-            ClaimsIdentity identity = new ClaimsIdentity(new Claim[]
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim(ClaimTypes.Email, user.UserName),
-            },
-            DefaultAuthenticationTypes.ApplicationCookie);
-            */
-            /*
-            AuthenticationManager.SignIn(new AuthenticationProperties
-            {
-                AllowRefresh = true,
-                IsPersistent = false, // Stores cookie on disk if true
-                // TODO: Make sure we understand the ExpiresUtc vs auth config ExpireTimeSpan 
-                // This seems to overwrite the auth setting for expiration.
-                // So, only use if persistent.
-                //ExpiresUtc = DateTime.UtcNow.AddDays(7)
-            },
-            identity);
-            */
+                ModelState.AddModelError("", "Sorry, failed to log you in. Try again.");
+                return View(model);
+            }
+            
             AuthenticationManager.SignIn(identity);
 
             return RedirectLocal(model.ReturnUrl);   
