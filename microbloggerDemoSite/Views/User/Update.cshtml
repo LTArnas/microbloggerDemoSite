@@ -1,0 +1,51 @@
+﻿@model microbloggerDemoSite.Models.User.UpdateUserViewModel
+
+@{
+    ViewBag.Title = "Settings";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <h2>Such change! <small>...probably a good thing.</small></h2>
+    </div>
+</div>
+
+@if (ViewBag.Success == true)
+{
+    <div class="row">
+        <div class="col-xs-12">
+            <h3><span class="label label-success">Success!</span></h3>
+        </div>
+    </div>
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken();
+            
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Nick)
+                <span class="help-block">@Html.ValidationMessageFor(m => m.Nick, null, new { @class = "label label-danger" })</span>
+                @Html.EditorFor(m => m.Nick, new { @class = "form-control" })
+            </div>
+
+            <br />
+
+            <button class="btn btn-primary" type="submit">Update</button>
+        }
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <h3>
+            <a class="btn btn-warning"
+               href="@Url.Action("UpdatePassword", "Auth")">
+                Change password
+            </a>
+        </h3>
+    </div>
+</div>

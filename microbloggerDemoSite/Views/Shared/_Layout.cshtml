@@ -33,7 +33,8 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@_user.Nick <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li>@Html.ActionLink("Profile", "Read", "User", new { userId = _user.Id }, null)</li>
+                                    <li>@Html.ActionLink("Profile", "Get", "User", new { userId = _user.Id }, null)</li>
+                                    <li>@Html.ActionLink("Settings", "Update", "User")</li>
                                     <li role="separator" class="divider"></li>
                                     <li>@Html.ActionLink("Logout", "LogOut", "Auth")</li>
                                 </ul>

@@ -1,0 +1,79 @@
+﻿@model microbloggerDemoSite.Models.User.GetUserViewModel
+@{
+    ViewBag.Title = Model.Nick + " - Profile";
+}
+
+<div class="row">
+    <div class="col-xs-12">
+        <h2>A human! <small>...already something in common!</small></h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <h3>
+            <a class="btn btn-info"
+               href="@Url.Action("Get", "User", new { userId = Model.Id })">
+                <span class="glyphicon glyphicon-link"></span>
+                @Model.Nick
+            </a>
+        </h3>
+    </div>
+</div>
+
+@if (ViewBag.User?.Id == Model.Id)
+{
+    <div class="row">
+        <div class="col-md-6">
+            <a class="btn btn-danger"
+               href="@Url.Action("Update", "User")">
+                Settings
+            </a>
+        </div>
+    </div>
+}
+<div class="row">
+    <div class="col-xs-12">
+        <h3>Recent Posts</h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <ul class="list-group">
+            @foreach (var item in Model.RecentPosts)
+            {
+                <li class="list-group-item">
+                    <div class="pull-right">
+                        <div class="col-md-6">
+                            <h4>
+                                <a class="label label-default"
+                                   href="@Url.Action("Get", "Post", new { userId = Model.Id, postId = item.Id })">
+                                    <span class="glyphicon glyphicon-link"></span>
+                                    @item.Id
+                                </a>
+                            </h4>
+                        </div>
+                        <div class="col-md-6">
+                            <h4>
+                                <span class="glyphicon glyphicon-calendar"></span>
+                                @item.PublishDate
+                            </h4>
+                        </div>
+                    </div>
+                    <blockquote>
+                        <p class="blog-post">@item.Content</p>
+                    </blockquote>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <a class="btn btn-info"
+           href="@Url.Action("List", "Post", new { userId = Model.Id })">
+            All posts
+        </a>
+    </div>
+</div>

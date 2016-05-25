@@ -163,5 +163,37 @@ namespace microbloggerDemoSite.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        public ActionResult UpdatePassword(UpdatePasswordViewModel viewModel)
+        {
+            if (viewModel == null)
+                viewModel = new UpdatePasswordViewModel();
+
+            if (viewModel.Password != viewModel.PasswordRepeat)
+                ModelState.AddModelError("Password", "The two new password fields did not match.");
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ActionName("UpdatePassword")]
+        public ActionResult UpdatePassword_Confirm(UpdatePasswordViewModel viewModel)
+        {
+            if (viewModel.Password != viewModel.PasswordRepeat)
+            {
+                ModelState.AddModelError("Password", "The two new password fields did not match.");
+            }
+
+            if (ModelState.IsValid &&
+                User.Identity.IsAuthenticated) // To be safe.
+            {
+                UserManager.ChangePassword(User.Identity.GetUserId(), viewModel.CurrentPassword, viewModel.Password);
+                
+                return LogOut_Confirm();
+            }
+
+            return View(viewModel);
+        }
     }
 }
