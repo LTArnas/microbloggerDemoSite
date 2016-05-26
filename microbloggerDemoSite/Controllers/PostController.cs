@@ -69,14 +69,14 @@ namespace microbloggerDemoSite.Controllers
                 userId = User.Identity.GetUserId();
 
             IdentityUser author = UserManager.FindById(userId);
-
+            
             if (page < 1)
                 page = 1;
             if (page > author.BucketCount)
                 page = author.BucketCount;
             
             Bucket result = BlogManager.FindBucketByNumber(userId, page);
-
+            
             ListPostsViewModel viewModel = new ListPostsViewModel
             {
                 Author = author,

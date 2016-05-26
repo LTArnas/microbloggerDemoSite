@@ -7,65 +7,107 @@
                 @{
                     foreach (var indexedUser in Model.Select((user, index) => new { index, user }))
                     {
-                        // Some special markup for first user
-                        
-                        if (indexedUser.index == 0)
+                        bool noPosts; // True if the user has not created any posts yet.
+                        if (indexedUser.user.RecentPosts == null || indexedUser.user.RecentPosts.Count == 0)
                         {
-                            <div class="panel-heading" role="tab" id="@indexedUser.user.Id+Heading">
-                                <h4 class="panel-title">
-                                    <a role="button" 
-                                        data-toggle="collapse" 
-                                        data-parent="#usersAccordion" 
-                                        href="#@indexedUser.user.Id" 
-                                        aria-expanded="true" 
-                                        aria-controls="@indexedUser.user.Id">@indexedUser.user.Nick</a>
-                                </h4>
+                            noPosts = true;
+                        }
+                        else
+                        {
+                            noPosts = false;
+                        }
+
+                        <div class="panel-heading" role="tab" id="@indexedUser.user.Id+Heading">
+                            <h3 class="panel-title">
+                                <a class="btn btn-primary"
+                                   href="@Url.Action("Get", "User", new { userId = indexedUser.user.Id })">
+                                    <span class="glyphicon glyphicon-user"></span>
+                                    @indexedUser.user.Nick
+                                </a>
+                                @{
+                                    if (noPosts)
+                                    {
+                                        <span class="label label-success pull-right">...New user! Welcome!</span>
+                                    }
+                                    else if (indexedUser.user.RecentPosts.Count > 1)
+                                    {
+                                        <a role="button"
+                                           class="collapsed btn btn-info pull-right"
+                                           data-toggle="collapse"
+                                           data-parent="#usersAccordion"
+                                           href="#@indexedUser.user.Id"
+                                           aria-expanded="true"
+                                           aria-controls="@indexedUser.user.Id">
+                                            Peek more...
+                                        </a>
+                                    }
+                                }
+                            </h3>
+                        </div>
+
+                        if (!noPosts)
+                        {
+                            microbloggerDemoSite.Blog.Models.Post post = indexedUser.user.RecentPosts[0];
+
+                            <div class="panel-body">
+                                <div class="pull-right">
+                                    <div class="col-md-6">
+                                        <h4>
+                                            <a class="label label-default"
+                                                href="@Url.Action("Get", "Post", new { userId = indexedUser.user.Id, postId = post.Id })">
+                                                <span class="glyphicon glyphicon-link"></span>
+                                                @post.Id
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h4>
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                            @post.PublishDate
+                                        </h4>
+                                    </div>
+                                </div>
+                                <blockquote>
+                                    <p class="blog-post">@post.Content</p>
+                                </blockquote>
                             </div>
-                            <div id="@indexedUser.user.Id" 
-                                    class="panel-collapse collapse in" 
-                                    role="tabpanel" 
+
+                            <div id="@indexedUser.user.Id"
+                                    class="panel-collapse collapse"
+                                    role="tabpanel"
                                     aria-labelledby="@indexedUser.user.Id+Heading">
                                 <ul class="list-group">
                                     @{
-                                        foreach (microbloggerDemoSite.Blog.Models.Post post in indexedUser.user.RecentPosts)
+                                        for (int i = 1; i < indexedUser.user.RecentPosts.Count; i++)
                                         {
+                                            post = indexedUser.user.RecentPosts[i];
                                             <li class="list-group-item">
-                                                <p class="blog-post">@post.Content</p>
+                                                <div class="pull-right">
+                                                    <div class="col-md-6">
+                                                        <h4>
+                                                            <a class="label label-default"
+                                                                href="@Url.Action("Get", "Post", new { userId = indexedUser.user.Id, postId = post.Id })">
+                                                                <span class="glyphicon glyphicon-link"></span>
+                                                                @post.Id
+                                                            </a>
+                                                        </h4>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <h4>
+                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                            @post.PublishDate
+                                                        </h4>
+                                                    </div>
+                                                </div>
+                                                <blockquote>
+                                                    <p class="blog-post">@post.Content</p>
+                                                </blockquote>
                                             </li>
                                         }
                                     }
                                 </ul>
                             </div>
                         }
-                        else
-                        {
-                            <div class="panel-heading" role="tab" id="@indexedUser.user.Id+Heading">
-                                <h4 class="panel-title">
-                                    <a class="collapsed" 
-                                       role="button" 
-                                       data-toggle="collapse" 
-                                       data-parent="#usersAccordion" 
-                                       href="#@indexedUser.user.Id" 
-                                       aria-expanded="false" 
-                                       aria-controls="@indexedUser.user.Id">@indexedUser.user.Nick</a>
-                                </h4>
-                            </div>
-                            <div id="@indexedUser.user.Id" 
-                                 class="panel-collapse collapse" 
-                                 role="tabpanel" 
-                                 aria-labelledby="@indexedUser.user.Id+Heading">
-                                <ul class="list-group">
-                                    @{
-                                        foreach (microbloggerDemoSite.Blog.Models.Post post in indexedUser.user.RecentPosts)
-                                        {
-                                            <li class="list-group-item">
-                                                <p class="blog-post">@post.Content</p>
-                                            </li>
-                                        }
-                                    }
-                                </ul>
-                            </div>
-                        } 
                     }
                 }
             </section>
