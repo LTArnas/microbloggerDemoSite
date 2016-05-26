@@ -19,7 +19,7 @@
 
                         <div class="panel-heading" role="tab" id="@indexedUser.user.Id+Heading">
                             <h3 class="panel-title">
-                                <a class="btn btn-primary"
+                                <a class="btn btn-info"
                                    href="@Url.Action("Get", "User", new { userId = indexedUser.user.Id })">
                                     <span class="glyphicon glyphicon-user"></span>
                                     @indexedUser.user.Nick
@@ -32,7 +32,7 @@
                                     else if (indexedUser.user.RecentPosts.Count > 1)
                                     {
                                         <a role="button"
-                                           class="collapsed btn btn-info pull-right"
+                                           class="collapsed btn btn-default pull-right"
                                            data-toggle="collapse"
                                            data-parent="#usersAccordion"
                                            href="#@indexedUser.user.Id"
