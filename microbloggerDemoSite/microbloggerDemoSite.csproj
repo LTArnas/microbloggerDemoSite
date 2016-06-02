@@ -181,6 +181,7 @@
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PostController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -217,6 +218,7 @@
     <Content Include="Views\User\Get.cshtml" />
     <Content Include="Views\User\Update.cshtml" />
     <Content Include="Views\Auth\UpdatePassword.cshtml" />
+    <Content Include="Views\Search\Nick.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

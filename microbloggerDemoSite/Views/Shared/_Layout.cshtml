@@ -21,7 +21,18 @@
                 @Html.ActionLink("MicroBlogger", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
+                @using (Html.BeginRouteForm("NavbarSearch", FormMethod.Get, new { @class = "navbar-form navbar-left", @role = "search" }))
+                {
+                    <div class="form-group">
+                        <input class="form-control"
+                               type="text"
+                               name="query"
+                               value=""
+                               placeholder="Nick" />
+                    </div>
+                    <button class="btn btn-default" type="submit">Search</button>
+                }
+                <ul class="nav navbar-nav navbar-right">
                     @{
                         if (_user == null)
                         {
@@ -30,6 +41,7 @@
                         }
                         else
                         {
+                            <li>@Html.ActionLink("New Post", "Create", "Post")</li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@_user.Nick <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
@@ -39,7 +51,6 @@
                                     <li>@Html.ActionLink("Logout", "LogOut", "Auth")</li>
                                 </ul>
                             </li>
-                            <li>@Html.ActionLink("New Post", "Create", "Post")</li>
                         }
                     }
                 </ul>

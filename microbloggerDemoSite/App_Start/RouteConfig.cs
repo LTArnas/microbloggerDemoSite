@@ -18,6 +18,13 @@ namespace microbloggerDemoSite
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            // Route for the form in the navbar
+            routes.MapRoute(
+                name: "NavbarSearch",
+                url: "Search/Nick/{query}",
+                defaults: new { query = UrlParameter.Optional }
+            );
         }
     }
 }
