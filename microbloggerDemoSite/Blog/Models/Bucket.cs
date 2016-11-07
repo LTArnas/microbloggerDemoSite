@@ -36,7 +36,7 @@ namespace microbloggerDemoSite.Blog.Models
         public bool Full { get; set; } // Bool default value is false. https://msdn.microsoft.com/en-gb/library/83fhsxwc.aspx
 
         public List<Post> Posts { get; set; }
-        
+
         public bool AddPost(Post newPost)
         {
             if (newPost == null)

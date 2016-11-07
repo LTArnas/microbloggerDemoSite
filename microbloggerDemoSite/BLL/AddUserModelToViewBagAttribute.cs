@@ -19,9 +19,12 @@ namespace microbloggerDemoSite.BLL
             base.OnResultExecuting(filterContext);
             IOwinContext owinContext = filterContext.HttpContext.GetOwinContext();
             UserManager<IdentityUser> userManager = owinContext.GetUserManager<UserManager<IdentityUser>>();
-            IdentityUser user = userManager.FindByName(filterContext.HttpContext.User.Identity.Name);
-            if (user != null)
-                filterContext.Controller.ViewBag.User = user;
+            if (filterContext.HttpContext.User.Identity.IsAuthenticated)
+            {
+                IdentityUser user = userManager.FindByName(filterContext.HttpContext.User.Identity.Name);
+                if (user != null)
+                    filterContext.Controller.ViewBag.User = user;
+            }
         }
     }
 }

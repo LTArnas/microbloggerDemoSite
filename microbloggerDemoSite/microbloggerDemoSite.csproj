@@ -174,7 +174,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BLL\AddUserModelToViewBagAttribute.cs" />
     <Compile Include="Blog\BlogManager.cs" />
-    <Compile Include="Blog\BlogRepository.cs" />
     <Compile Include="Blog\Models\Bucket.cs" />
     <Compile Include="Blog\Models\Post.cs" />
     <Compile Include="Controllers\BaseController.cs" />

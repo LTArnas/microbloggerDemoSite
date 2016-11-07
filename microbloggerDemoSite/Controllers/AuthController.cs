@@ -22,12 +22,7 @@ namespace microbloggerDemoSite.Controllers
         // typeof(identitymanager.id) instead of defining string type?
         //private SignInManager<IdentityUser, string> _signInManager;
 
-        // TODO: Delete this if base does not have constructor definition anymore.
-        public AuthController() :
-            base()
-        {
-        }
-        
+
         public ActionResult Register()
         {
             return View(new RegisterModel());
@@ -64,7 +59,7 @@ namespace microbloggerDemoSite.Controllers
                 UserName = model.UserName,
                 Nick = model.Nick,
                 LastPost = DateTime.MinValue,
-                
+
                 ApplicationClaims = new List<ApplicationClaim> {
                     new ApplicationClaim("Nick", model.Nick),
                 }
@@ -95,7 +90,7 @@ namespace microbloggerDemoSite.Controllers
             // Finished
             return RedirectLocal(Url.Action("Index", "Home"));
         }
-        
+
         // GET: Auth
         public ActionResult Index()
         {
@@ -126,12 +121,16 @@ namespace microbloggerDemoSite.Controllers
             if (user == null)
             {
                 // Failed to find user.
+                ModelState.AddModelError("", "Incorrect username or password.");
                 return View(model);
             }
 
             bool correctPassword = UserManager.CheckPassword(user, model.Password);
             if (!correctPassword)
+            {
+                ModelState.AddModelError("", "Incorrect username or password.");
                 return View(model);
+            }
 
             ClaimsIdentity identity = UserManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
 
@@ -140,10 +139,10 @@ namespace microbloggerDemoSite.Controllers
                 ModelState.AddModelError("", "Sorry, failed to log you in. Try again.");
                 return View(model);
             }
-            
+
             AuthenticationManager.SignIn(identity);
 
-            return RedirectLocal(model.ReturnUrl);   
+            return RedirectLocal(model.ReturnUrl);
         }
 
         public ActionResult LogOut()
@@ -158,7 +157,7 @@ namespace microbloggerDemoSite.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                AuthenticationManager.SignOut(User.Identity.AuthenticationType); 
+                AuthenticationManager.SignOut(User.Identity.AuthenticationType);
             }
 
             return RedirectToAction("Index", "Home");
@@ -189,7 +188,7 @@ namespace microbloggerDemoSite.Controllers
                 User.Identity.IsAuthenticated) // To be safe.
             {
                 UserManager.ChangePassword(User.Identity.GetUserId(), viewModel.CurrentPassword, viewModel.Password);
-                
+
                 return LogOut_Confirm();
             }
 

@@ -11,7 +11,7 @@ using microbloggerDemoSite.Blog.Models;
 
 namespace microbloggerDemoSite.Blog
 {
-    public class BlogManager : IDisposable
+    public class BlogManager : IDisposable // Required for Owin's CreatePerOwinContext().
     {
         // TODO: check how we use the usermanager, and try to remove it.
         private UserManager<IdentityUser> _userManager;
@@ -40,7 +40,10 @@ namespace microbloggerDemoSite.Blog
                     foreach (Bucket searchBucket in cursor.Current)
                     {
                         bucket = searchBucket;
+                        break;
                     }
+                    if (bucket != null)
+                        break;
                 }
             }
 
@@ -86,7 +89,10 @@ namespace microbloggerDemoSite.Blog
                     foreach (Bucket bucket in cursor.Current)
                     {
                         result = bucket;
+                        break;
                     }
+                    if (result != null)
+                        break;
                 }
             }
 
@@ -111,6 +117,8 @@ namespace microbloggerDemoSite.Blog
                             break;
                         }
                     }
+                    if (result != null)
+                        break;
                 }
             }
 

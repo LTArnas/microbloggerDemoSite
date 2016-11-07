@@ -50,7 +50,6 @@ namespace microbloggerDemoSite
                 //CookieSecure = CookieSecureOption.Always,
                 AuthenticationMode = AuthenticationMode.Active,
                 LoginPath = new PathString("/auth/login"),
-                // TODO: Change to something higher for production, maybe 30 minutes?
                 ExpireTimeSpan = TimeSpan.FromHours(1),
                 SlidingExpiration = true
             });

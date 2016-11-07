@@ -25,14 +25,7 @@ namespace microbloggerDemoSite.Controllers
         private UserManager<IdentityUser> _userManager;
         private IAuthenticationManager _authManager;
         private BlogManager _blogManager;
-/*
-        // TODO: This might not be correct way of doing this. may need to override special method, Initialize? OnActionExecute?
-        public BaseController() :
-            base()
-        {
-        }
-        */
-        // TODO: have a private authManager variable. use override initialize method on controller.
+
         public IAuthenticationManager AuthenticationManager
         {
             get
